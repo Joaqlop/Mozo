@@ -14,7 +14,6 @@ class LoginScreen extends StatelessWidget {
     final urlForm = Provider.of<LoginProvider>(context);
     final product = Provider.of<ProductProvider>(context);
     final listUrl = Provider.of<SavedUrlProvider>(context);
-
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -57,7 +56,6 @@ class LoginScreen extends StatelessWidget {
                         if (!urlForm.isValid()) return;
                         product.getProducts(urlForm.requestUrl);
                         listUrl.saveUrl(urlForm.requestUrl);
-
                         Navigator.pushReplacementNamed(context, 'home');
                       },
                 child: product.isLoading

@@ -16,6 +16,7 @@ class SavedUrlProvider extends ChangeNotifier {
 
   removeUrl(String url) {
     savedUrl.remove(url);
+
     notifyListeners();
 
     if (savedUrl.isNotEmpty) return;
@@ -25,6 +26,7 @@ class SavedUrlProvider extends ChangeNotifier {
 
   removeEverything() {
     savedUrl.clear();
+
     haveAnything = false;
     notifyListeners();
   }

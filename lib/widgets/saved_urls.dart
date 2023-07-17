@@ -10,10 +10,9 @@ class SavedUrls extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = TextStyle(color: Colors.grey.shade300);
-
     final product = Provider.of<ProductProvider>(context);
     final url = Provider.of<LoginProvider>(context);
-    final savedUrl = Provider.of<SavedUrlProvider>(context);
+    final listUrl = Provider.of<SavedUrlProvider>(context);
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -41,14 +40,13 @@ class SavedUrls extends StatelessWidget {
                 MaterialButton(
                   elevation: 0,
                   height: 45,
-                  color: Colors
-                      .red.shade800, //const Color(0xfffe4a55).withOpacity(0.7),
+                  color: Colors.red.shade800,
                   child: Text(
                     'Eliminar todo',
                     style: style,
                   ),
                   onPressed: () {
-                    savedUrl.removeEverything();
+                    listUrl.removeEverything();
                     Navigator.pop(context);
                   },
                 ),
@@ -70,11 +68,12 @@ class SavedUrls extends StatelessWidget {
                     highlightColor: Colors.red.shade800,
                     icon: Icon(Icons.close, color: Colors.grey.shade300),
                     onPressed: () {
-                      savedUrl.removeUrl(saved[i]);
+                      listUrl.removeUrl(saved[i]);
                     },
                   ),
                   onTap: () {
                     saved[i] = url.requestUrl;
+                    print(saved[i]);
                     product.getProducts(saved[i]);
                     Navigator.pushNamedAndRemoveUntil(
                         context, 'home', (route) => false);
