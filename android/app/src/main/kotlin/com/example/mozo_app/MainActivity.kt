@@ -1,0 +1,6 @@
+package com.example.mozo_app
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity() {
+}
