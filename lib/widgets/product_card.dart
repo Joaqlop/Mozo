@@ -38,46 +38,45 @@ class ProductCard extends StatelessWidget {
                 product.name, product.price, product.promox2, product.promox3);
           },
         ),
-        MaterialButton(
-          minWidth: 135,
-          color: const Color(0xff1a1a24),
-          textColor: Colors.grey.shade500,
-          splashColor: const Color(0xff232333),
-          highlightColor: const Color(0xff232333).withOpacity(0.5),
-          elevation: 0,
-          highlightElevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-            side: BorderSide(
-              color: const Color(0xff232333).withOpacity(0.5),
-              width: 2,
+        Padding(
+          padding: const EdgeInsets.only(left: 5, top: 5, bottom: 5),
+          child: MaterialButton(
+            minWidth: 130,
+            color: const Color(0xff1a1a24),
+            textColor: Colors.grey.shade500,
+            splashColor: const Color(0xff232333),
+            highlightColor: const Color(0xff232333).withOpacity(0.5),
+            elevation: 0,
+            highlightElevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
             ),
-          ),
-          child: SizedBox(
-            width: 100,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text(
-                  product.name,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.grey.shade400,
+            child: SizedBox(
+              width: 100,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    product.name,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.grey.shade400,
+                    ),
                   ),
-                ),
-                Text(
-                  r'$' + product.price.toString(),
-                  style: TextStyle(color: Colors.grey.shade400),
-                ),
-              ],
+                  Text(
+                    r'$' + product.price.toString(),
+                    style: TextStyle(color: Colors.grey.shade400),
+                  ),
+                ],
+              ),
             ),
+            onPressed: () {
+              selectedProduct.addProduct(product.name, product.price,
+                  product.promox2, product.promox3);
+            },
           ),
-          onPressed: () {
-            selectedProduct.addProduct(
-                product.name, product.price, product.promox2, product.promox3);
-          },
         ),
       ],
     );

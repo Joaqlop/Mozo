@@ -3,16 +3,15 @@ import 'package:mozo_app/providers/providers.dart';
 import 'package:provider/provider.dart';
 
 class SavedUrls extends StatelessWidget {
-  const SavedUrls({super.key, required this.saved});
-
-  final List<String> saved;
+  const SavedUrls({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final style = TextStyle(color: Colors.grey.shade300);
     final product = Provider.of<ProductProvider>(context);
     final url = Provider.of<LoginProvider>(context);
     final listUrl = Provider.of<SavedUrlProvider>(context);
+
+    final style = TextStyle(color: Colors.grey.shade300);
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -34,7 +33,7 @@ class SavedUrls extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Links Guardados',
+                  'URLs Guardadas',
                   style: style,
                 ),
                 MaterialButton(
@@ -56,28 +55,26 @@ class SavedUrls extends StatelessWidget {
           const SizedBox(height: 10),
           Flexible(
             child: ListView.builder(
-              itemCount: saved.length,
+              itemCount: listUrl.savedUrl.length,
               itemBuilder: (_, i) => Padding(
                 padding: const EdgeInsets.symmetric(vertical: 7),
                 child: ListTile(
                   splashColor: Colors.green.shade700,
-                  title: Text(saved[i], style: style),
+                  title: Text(listUrl.savedUrl[i], style: style),
                   leading:
                       const Icon(Icons.link_outlined, color: Color(0xff3e4253)),
                   trailing: IconButton(
                     highlightColor: Colors.red.shade800,
                     icon: Icon(Icons.close, color: Colors.grey.shade300),
                     onPressed: () {
-                      listUrl.removeUrl(saved[i]);
+                      listUrl.removeUrl(listUrl.savedUrl[i]);
                     },
                   ),
                   onTap: () {
-                    saved[i] = url.requestUrl;
-                    print(saved[i]);
-                    product.getProducts(saved[i]);
+                    listUrl.savedUrl[i] = url.requestUrl;
+                    product.getProducts(listUrl.savedUrl[i]);
                     Navigator.pushNamedAndRemoveUntil(
                         context, 'home', (route) => false);
-                    //Navigator.pushReplacementNamed(context, 'home');
                   },
                 ),
               ),

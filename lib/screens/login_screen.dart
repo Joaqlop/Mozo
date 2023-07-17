@@ -54,8 +54,10 @@ class LoginScreen extends StatelessWidget {
                     : () async {
                         FocusScope.of(context).unfocus();
                         if (!urlForm.isValid()) return;
+
                         product.getProducts(urlForm.requestUrl);
                         listUrl.saveUrl(urlForm.requestUrl);
+
                         Navigator.pushReplacementNamed(context, 'home');
                       },
                 child: product.isLoading
@@ -88,7 +90,7 @@ class LoginScreen extends StatelessWidget {
                         showModalBottomSheet(
                           elevation: 0,
                           context: context,
-                          builder: (_) => SavedUrls(saved: listUrl.savedUrl),
+                          builder: (_) => const SavedUrls(),
                         );
                       }
                     : () {},
