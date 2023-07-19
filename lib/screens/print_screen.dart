@@ -26,14 +26,22 @@ class _PrintScreenState extends State<PrintScreen> {
     super.initState();
 
     bluetoothPrint.state.listen((value) {
-      if (value == 12) {
-        setState(() {
-          WidgetsBinding.instance.addPostFrameCallback((_) => initBluetooth());
-          stateMessage = 'Seleccione un dispositivo.';
+      if (value == 12 && connected) {
+        Provider.of<PrinterProvider>(context).printing;
+        _startPrint(
+          bluetoothPrint,
+          Provider.of<SelectedProductProvider>(context).selectedProducts,
+          Provider.of<SelectedProductProvider>(context).qtySelected,
+          Provider.of<SelectedProductProvider>(context).total,
+        );
+        setState(() async {
+          stateMessage = 'Ticket impreso correctamente.';
+          Provider.of<PrinterProvider>(context).endPrinting();
         });
       } else {
         setState(() {
-          stateMessage = 'Bluetooth desactivado.';
+          WidgetsBinding.instance.addPostFrameCallback((_) => initBluetooth());
+          stateMessage = 'Seleccione un dispositivo.';
         });
       }
     });
@@ -233,9 +241,9 @@ class _PrintScreenState extends State<PrintScreen> {
                   : const Color(0xff232333).withOpacity(0.5),
               label: const Text('Imprimir Ticket'),
               onPressed: connected
-                  ? () {
+                  ? () async {
                       printer.printing();
-                      _startPrint(
+                      await _startPrint(
                         bluetoothPrint,
                         selectedProducts.selectedProducts,
                         selectedProducts.qtySelected,
