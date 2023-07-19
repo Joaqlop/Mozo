@@ -6,8 +6,19 @@ import 'package:mozo_app/providers/providers.dart';
 import 'package:mozo_app/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<SavedUrlProvider>(context, listen: false).loadUrlDb();
+  }
 
   @override
   Widget build(BuildContext context) {

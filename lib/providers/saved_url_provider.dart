@@ -1,21 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SavedUrlProvider extends ChangeNotifier {
   List<String> savedUrl = [];
   bool haveAnything = false;
 
-  saveUrl(String requestUrl) {
+  loadUrlDb() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    savedUrl = prefs.getStringList('savedUrl') ?? [];
+
+    if (savedUrl.isEmpty) return;
+    haveAnything = true;
+    notifyListeners();
+  }
+
+  saveUrl(String requestUrl) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     final sameUrl = savedUrl.any((e) => e == requestUrl);
 
     if (sameUrl) return;
 
     savedUrl.add(requestUrl);
+    prefs.setStringList('savedUrl', savedUrl);
     haveAnything = true;
     notifyListeners();
   }
 
-  removeUrl(String url) {
-    savedUrl.remove(url);
+  removeUrl(String requestUrl) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    savedUrl.remove(requestUrl);
+    prefs.setStringList('savedUrl', savedUrl);
 
     notifyListeners();
 
@@ -24,8 +38,10 @@ class SavedUrlProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  removeEverything() {
+  removeEverything() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     savedUrl.clear();
+    prefs.setStringList('savedUrl', savedUrl);
 
     haveAnything = false;
     notifyListeners();

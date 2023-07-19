@@ -71,7 +71,7 @@ class SavedUrls extends StatelessWidget {
                     },
                   ),
                   onTap: () {
-                    listUrl.savedUrl[i] = url.requestUrl;
+                    url.requestUrl = listUrl.savedUrl[i];
                     product.getProducts(listUrl.savedUrl[i]);
                     Navigator.pushNamedAndRemoveUntil(
                         context, 'home', (route) => false);
