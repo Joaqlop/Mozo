@@ -18,7 +18,7 @@ class ProductProvider extends ChangeNotifier {
     final url = Uri.https(rawUrl.host, rawUrl.path);
     final response = await http.get(url);
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 && response.body.startsWith('{')) {
       final Map<String, dynamic> productMap = json.decode(response.body);
       productMap.forEach((key, value) {
         final product = Product.fromJson(value);
