@@ -30,18 +30,22 @@ class _PrintScreenState extends State<PrintScreen> {
         Provider.of<PrinterProvider>(context).printing;
         _startPrint(
           bluetoothPrint,
-          Provider.of<SelectedProductProvider>(context).selectedProducts,
-          Provider.of<SelectedProductProvider>(context).qtySelected,
-          Provider.of<SelectedProductProvider>(context).total,
+          Provider.of<SelectedProductProvider>(context, listen: false)
+              .selectedProducts,
+          Provider.of<SelectedProductProvider>(context, listen: false)
+              .qtySelected,
+          Provider.of<SelectedProductProvider>(context, listen: false).total,
         );
-        setState(() async {
-          stateMessage = 'Ticket impreso correctamente.';
-          Provider.of<PrinterProvider>(context).endPrinting();
+        Provider.of<PrinterProvider>(context).endPrinting();
+        stateMessage = 'Ticket impreso correctamente.';
+      } else if (value == 12) {
+        WidgetsBinding.instance.addPostFrameCallback((_) => initBluetooth());
+        setState(() {
+          stateMessage = 'Seleccione un dispositivo.';
         });
       } else {
         setState(() {
-          WidgetsBinding.instance.addPostFrameCallback((_) => initBluetooth());
-          stateMessage = 'Seleccione un dispositivo.';
+          stateMessage = 'Bluetooth desactivado.';
         });
       }
     });
@@ -53,8 +57,6 @@ class _PrintScreenState extends State<PrintScreen> {
     bool isConnected = await bluetoothPrint.isConnected ?? false;
 
     bluetoothPrint.state.listen((state) {
-      print('************ device status: $state');
-
       switch (state) {
         case BluetoothPrint.CONNECTED:
           setState(() {
@@ -196,7 +198,6 @@ class _PrintScreenState extends State<PrintScreen> {
                                 : null,
                             onTap: connected
                                 ? () async {
-                                    // DESCONECTANDO DISPOSITIVO
                                     setState(() {
                                       stateMessage =
                                           'Desconectando de ${device!.name}...';
@@ -205,7 +206,6 @@ class _PrintScreenState extends State<PrintScreen> {
                                     printer.removeSavedPrinter();
                                   }
                                 : () async {
-                                    // CONECTANDO DISPOSITIVO
                                     device = deviceListened;
                                     if (device != null &&
                                         device!.address != null) {
@@ -249,12 +249,10 @@ class _PrintScreenState extends State<PrintScreen> {
                         selectedProducts.qtySelected,
                         selectedProducts.total,
                       );
-                      setState(() async {
-                        stateMessage = 'Ticket impreso correctamente.';
-                      });
+                      stateMessage = 'Ticket impreso correctamente.';
                       printer.endPrinting();
                     }
-                  : null,
+                  : () {},
             )
           : const SizedBox(
               height: 30,
@@ -335,15 +333,6 @@ Future<void> _startPrint(
   }
 
   list
-    ..add(
-      LineText(
-        type: LineText.TYPE_TEXT,
-        align: LineText.ALIGN_RIGHT,
-        content: 'Productos: $qty',
-        linefeed: 1,
-        size: 10,
-      ),
-    )
     ..add(
       LineText(
         type: LineText.TYPE_TEXT,

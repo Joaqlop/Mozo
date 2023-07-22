@@ -15,8 +15,8 @@ String? validateUrl(String? value) {
     return 'La URL debe contener el prefijo HTTP';
   }
 
-  if (!value.endsWith('json')) {
-    return 'No se encontró base de datos.';
+  if (!value.endsWith('.json')) {
+    return 'No se encontró archivo json';
   }
 
   return null;

@@ -22,7 +22,7 @@ class HomeBottomAppBar extends StatelessWidget {
       height: 70,
       color: Colors.transparent,
       child: Container(
-        padding: const EdgeInsets.only(left: 15, top: 10, bottom: 5),
+        padding: const EdgeInsets.only(left: 15, top: 12, bottom: 5),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           color: const Color(0xff232333).withOpacity(0.5),
@@ -52,7 +52,6 @@ class HomeBottomAppBar extends StatelessWidget {
                     }
                   : () {},
             ),
-            //const SizedBox(width: 10),
           ],
         ),
       ),

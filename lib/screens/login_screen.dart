@@ -14,6 +14,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  String stateMessage = '';
   @override
   void initState() {
     super.initState();
@@ -51,24 +52,36 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               const Text(
-                'Ingrese una URL a su base de datos. ',
+                'Ingrese una URL a su base de datos.',
                 style: TextStyle(color: Color(0xff3e4253)),
               ),
               const LoginForm(),
+              Text(
+                stateMessage,
+                style: TextStyle(color: Colors.red.shade800, fontSize: 13),
+              ),
               const SizedBox(height: 50),
               MaterialButton(
                 minWidth: size.width * 0.8,
                 elevation: 0,
                 color: Colors.indigo,
+                splashColor: Colors.indigo.shade800,
+                highlightColor: Colors.indigo.shade800,
                 onPressed: product.isLoading
-                    ? null
+                    ? () {}
                     : () async {
+                        stateMessage = '';
                         FocusScope.of(context).unfocus();
                         if (!urlForm.isValid()) return;
 
-                        product.getProducts(urlForm.requestUrl);
-                        listUrl.saveUrl(urlForm.requestUrl);
+                        await product.getProducts(urlForm.requestUrl);
+                        if (product.productList.isEmpty) {
+                          stateMessage = 'No se encontró base de datos';
+                          return;
+                        }
 
+                        listUrl.saveUrl(urlForm.requestUrl);
+                        // ignore: use_build_context_synchronously
                         Navigator.pushReplacementNamed(context, 'home');
                       },
                 child: product.isLoading
@@ -92,7 +105,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 elevation: 0,
                 highlightElevation: 0,
                 color: const Color(0xff232333).withOpacity(0.5),
-                highlightColor: const Color(0xff232333).withOpacity(0.5),
+                highlightColor: const Color(0xff1a1a24).withOpacity(0.5),
+                splashColor: const Color(0xff1a1a24),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),

@@ -8,10 +8,4 @@ class LoginProvider extends ChangeNotifier {
   bool isValid() {
     return urlKey.currentState?.validate() ?? false;
   }
-
-  exit() {
-    urlKey = GlobalKey();
-    requestUrl = '';
-    notifyListeners();
-  }
 }

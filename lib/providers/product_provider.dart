@@ -18,17 +18,21 @@ class ProductProvider extends ChangeNotifier {
     final url = Uri.https(rawUrl.host, rawUrl.path);
     final response = await http.get(url);
 
-    final Map<String, dynamic> productMap = json.decode(response.body);
-    productMap.forEach((key, value) {
-      final product = Product.fromJson(value);
-      product.id = key;
-      productList.add(product);
-    });
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> productMap = json.decode(response.body);
+      productMap.forEach((key, value) {
+        final product = Product.fromJson(value);
+        product.id = key;
+        productList.add(product);
+      });
+      isLoading = false;
+      notifyListeners();
+      return productList;
+    }
 
     isLoading = false;
     notifyListeners();
     return productList;
-    //! HACER UNA VALIDACIÓN PARA LAS URL QUE NO ARROJEN NADA O SEAN ERRONEAS
   }
 
   exit() {
