@@ -64,6 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
               MaterialButton(
                 minWidth: size.width * 0.8,
                 elevation: 0,
+                highlightElevation: 0,
                 color: Colors.indigo,
                 splashColor: Colors.indigo.shade800,
                 highlightColor: Colors.indigo.shade800,
