@@ -1,5 +1,5 @@
-
-# Mozo
+![logo](https://github.com/Joaqlop/Mozo/assets/111933055/2437002d-a255-4961-ad10-4955a0b0ce7a)
+# Mozo 
 _An app that creates tickets with products and prints it with a bluetooth thermal printer. Those products are read from a json database determined by the user._
 
 # Usage ✅
