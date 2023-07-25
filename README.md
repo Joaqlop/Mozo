@@ -27,6 +27,3 @@ When you need to print the ticket, the app searches for nearby bluetooth devices
 
 <img src="https://github.com/Joaqlop/Mozo/assets/111933055/66cd3eb8-442b-48c9-9f68-9180c706b01a" alt="device list" width=350px>
 
-  
-# Autors 🧍
-* **Joaquín López**
